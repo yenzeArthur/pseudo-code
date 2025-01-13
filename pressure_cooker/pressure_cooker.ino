@@ -1,5 +1,6 @@
 
 #include "cooker_config.h"
+#include <math.h>
 
 #define thermistor_pin 0x01
 #define relay_pin      D2

@@ -10,6 +10,7 @@
 
   int adc_values[10];
   uint8_t index = 0;
+  float previous_temperature = 0;
 
   typedef struct DEVICE_PARAMS{
     uint8_t adc_value;
@@ -17,6 +18,7 @@
     float temperature;
     float resistance;
     float voltage;
+    float boiling_point;
   } DEVICE_PARAMS;
 
   DEVICE_PARAMS device_params;

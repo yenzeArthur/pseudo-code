@@ -1,6 +1,5 @@
 
 #include "cooker_config.h"
-#include <math.h>
 
 bool init_ADC(uint8_t analog_pin){
   ADMUX  |= analog_pin;  // We read A4
@@ -32,5 +31,3 @@ void get_temperature_value(){
   device_params.temperature = 1 / (1/NTC_T0 + (1/NTC_B) * log(device_params.resistance/NTC_R0)); 
   device_params.temperature = device_params.temperature - 273.15;  
 }
-
-
