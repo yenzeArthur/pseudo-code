@@ -13,7 +13,7 @@ bool heater_init(){
 
 HEATER_STATES heater_control(int current_state){
   int state = current_state;
-  switch state{
+  switch (state){
     case ON:
       digitalWrite(relay_pin, HIGH);
     break;

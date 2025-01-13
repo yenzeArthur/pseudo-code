@@ -2,7 +2,7 @@
 #include "cooker_config.h"
 
 bool init_ADC(uint8_t analog_pin){
-  ADMUX  |= analog_pin;  // We read A4
+  ADMUX  |= analog_pin;  // We read A0
   ADMUX  |= B01000000;   // REFS0 equal to 1
   ADCSRA |= B11000000;   // ADEN and ADSC equal to 1
   return true;
