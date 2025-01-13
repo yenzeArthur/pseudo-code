@@ -1,0 +1,46 @@
+ Pseudo C code for the ADC
+Get_Adc_value( pin ){
+	ADMUX_Register |= (REFERENCE_BITS | PIN & 0bPIN_BIT);
+ 	SET_HIGH (CONTROL_BIT, STATUS_BIT);
+ 	WHILE (CONTROL_AND_STATUS_BITS_ARE_SET);
+ 	ADC_VALUE |= READ REGISTER;
+	return ADC_VALUE;
+}
+Get_actual_value (adc_value){
+	temperature = (adc_value * vref)/resolution;
+	temperature = temperature/Rnormal;
+	temperature = log(Steinhart);
+	temperature = Divide_temperature_by_Beta;
+	temperature += 1/(normal temperature value converted into kelvin scale)
+	temperature = invert temperature and change to celcius scale;
+	return temperaturein degrees Celsius;
+}
+Pseudo code: (for all the pseudo code, we assume all the initializations were made)
+Temperature conversion:
+•	Set the pin in the mux register
+•	Set the reference bits in the mux register (these set the voltage reference)
+•	Set the status and control bits in the status and control register
+•	While the control and status bits are held high, read the value from the 8-bit space
+•	Express the value in voltage by multiplying it with the voltage reference and diving it all by the resolution
+•	divide the value by the resister value at normal temperature
+•	get the temperature value from the Steinhart equation.
+Boil Detection:
+•	create an array to which a new variable gets appended, once full a value will be shifted out and replaced
+•	create a loop to run through this array summing its components and giving us the total
+•	we then divide the total by the number of items in that array to get the average.
+•	Store the average in a variable and one to update it to after the comparison
+•	Compare the current value to the previous value. If there is an increment, we just update one of two variables and wait on another value to make comparison to. If there is no change after comparison, we record that value as our set point or boiling point
+•	We return the boiling point value.
+Simmer Maintenance:
+•	We read the new average value here 
+•	We then compare that value to the boiling point. If the boiling point – the new average value are not equal, we check if they the average value is higher or lower. If it is higher, we switch the heat control to turn the heater off. If it is lower, we do the vice versa else, we keep watch for any change. For every iteration, the value of the average has to be updated. 
+Heater control: (this will take a state as a parameter)
+•	We create an enum with 2 states; heating and off
+•	Implement the state machine: in the heating state, D2 will be set high, in the off state, D2 will be set low.
+Main loop: (we will run in four states init, cooking, off and error)
+•	In the init state, the heater control will be set high and then the code sent to the next state
+•	In the cooking state, we’ll have a little state machine running two little states (find_boiling_point and simmer)
+•	In find boiling point, all function that can help with this are called; ADC, get_boiling_point() 
+•	When the boiling point is found, we move to the next sub state; simmer, the respective function is called here until one is done cooking then we go to the off state.
+•	In the off state the heat controller is prompted to turn the heaters off. 
+•	For any unwanted behavior say with our drivers or sensors, all their issues will lead to this state. 
