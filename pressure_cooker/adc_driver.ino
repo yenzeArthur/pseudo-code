@@ -1,7 +1,7 @@
 
 #include "cooker_config.h"
 
-bool init_ADC(uint8_t analog_pin){
+bool init_ADC(int analog_pin){
   ADMUX  |= analog_pin;  // We read A0
   ADMUX  |= B01000000;   // REFS0 equal to 1
   ADCSRA |= B11000000;   // ADEN and ADSC equal to 1
@@ -11,6 +11,7 @@ bool init_ADC(uint8_t analog_pin){
 void get_ADC_value(){
   while(bit_is_set(ADCSRA, ADSC));
   device_params.adc_value = ADCL | (ADCH << 8);
+  return true;
 }
 
 void calculate_avg_adc_value(){
@@ -29,5 +30,6 @@ void get_temperature_value(){
   device_params.voltage = (device_params.avg_adc_value * ADC_REF) / ADC_RESOLUTION;
   device_params.resistance = (device_params.voltage * NTC_R0) / (ADC_REF - device_params.voltage);
   device_params.temperature = 1 / (1/NTC_T0 + (1/NTC_B) * log(device_params.resistance/NTC_R0)); 
-  device_params.temperature = device_params.temperature - 273.15;  
+  device_params.temperature = device_params.temperature - 273.15;
+  return true;  
 }

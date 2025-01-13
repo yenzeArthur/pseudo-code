@@ -12,8 +12,20 @@
   uint8_t index = 0;
   float previous_temperature = 0;
 
+  typedef enum COOKER_STATES { 
+    INIT, 
+    HEATING, 
+    SIMMERING,
+    ERROR 
+  } COOKER_STATES;
+
+  typedef enum HEATER_STATES{
+    ON,
+    OFF
+  } HEATER_STATES;
+
   typedef struct DEVICE_PARAMS{
-    uint8_t adc_value;
+    uint16_t adc_value;
     float avg_adc_value;
     float temperature;
     float resistance;

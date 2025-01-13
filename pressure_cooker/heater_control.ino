@@ -1,11 +1,6 @@
 
 #include "cooker_config.h"
 
-typedef enum HEATER_STATES{
-  ON,
-  OFF
-} HEATER_STATES;
-
 bool heater_init(){
   pinMode(relay_pin, OUTPUT);
   return true;
