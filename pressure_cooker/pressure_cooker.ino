@@ -2,7 +2,7 @@
 #include "cooker_config.h"
 #include <math.h>
 
-#define thermistor_pin 0x01
+#define thermistor_pin 0x00 // connects to A0 via mux. 
 #define relay_pin      2
 
 COOKER_STATES current_cooker_state;
